@@ -678,6 +678,11 @@ button {
 .share-more-btn:hover { background: rgba(240,228,200,0.18); }
 .share-more-btn:active { transform: translateY(1px); }
 
+.share-menu[hidden],
+.qr-overlay[hidden] {
+  display: none;
+}
+
 .share-menu {
   position: absolute;
   bottom: calc(100% + 8px);
