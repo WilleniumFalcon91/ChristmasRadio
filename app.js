@@ -428,7 +428,7 @@
   // ---------- Controls ----------
   el.powerBtn.addEventListener("click", () => setPowered(!powered));
 
-  el.playBtn.addEventListener("click", () => {
+  function togglePlayPause() {
     if (!powered) {
       setPowered(true);
       return;
@@ -436,6 +436,24 @@
     if (!playerReady) return;
     if (isPlaying) player.pauseVideo();
     else player.playVideo();
+  }
+
+  el.playBtn.addEventListener("click", togglePlayPause);
+
+  // Fallback for hardware media keys (Mac rewind/play-pause/fast-forward, etc.)
+  // that reach the page as regular key events rather than through the
+  // Media Session API (e.g. when the OS hasn't claimed a Now Playing session).
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "MediaTrackPrevious") {
+      if (powered) changeSong(-1);
+      e.preventDefault();
+    } else if (e.code === "MediaTrackNext") {
+      if (powered) changeSong(1);
+      e.preventDefault();
+    } else if (e.code === "MediaPlayPause") {
+      togglePlayPause();
+      e.preventDefault();
+    }
   });
 
   el.prevBtn.addEventListener("click", () => { if (powered) changeSong(-1); });
