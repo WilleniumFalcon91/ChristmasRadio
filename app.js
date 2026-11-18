@@ -27,6 +27,7 @@
     marquee: document.getElementById("marquee"),
     marqueeTrack: document.querySelector(".marquee-track"),
     stationName: document.getElementById("stationName"),
+    stationTitle: document.getElementById("stationTitle"),
     vuL: document.getElementById("vuL"),
     vuR: document.getElementById("vuR"),
     dialNeedle: document.getElementById("dialNeedle"),
@@ -318,6 +319,7 @@
     el.playBtn.textContent = playing ? "⏸" : "▶";
     el.grille.classList.toggle("playing", playing);
     el.gnomeRow.classList.toggle("dancing", playing);
+    el.stationTitle.classList.toggle("blinking", playing);
     if (playing) startVU(); else stopVU();
     if ("mediaSession" in navigator) {
       navigator.mediaSession.playbackState = playing ? "playing" : "paused";

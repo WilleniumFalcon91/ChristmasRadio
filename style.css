@@ -83,6 +83,17 @@ button {
   text-shadow: 0 0 18px rgba(255,182,72,0.55), 0 2px 0 rgba(0,0,0,0.4);
   margin: 0;
 }
+.station-id.blinking {
+  animation: title-blink 2s steps(1) infinite;
+}
+@keyframes title-blink {
+  0%   { color: #e53935; text-shadow: 0 0 20px rgba(229,57,53,0.8), 0 2px 0 rgba(0,0,0,0.4); }
+  20%  { color: #43a047; text-shadow: 0 0 20px rgba(67,160,71,0.8), 0 2px 0 rgba(0,0,0,0.4); }
+  40%  { color: #fbc02d; text-shadow: 0 0 20px rgba(251,192,45,0.8), 0 2px 0 rgba(0,0,0,0.4); }
+  60%  { color: #1e88e5; text-shadow: 0 0 20px rgba(30,136,229,0.8), 0 2px 0 rgba(0,0,0,0.4); }
+  80%  { color: #ff6f91; text-shadow: 0 0 20px rgba(255,111,145,0.8), 0 2px 0 rgba(0,0,0,0.4); }
+  100% { color: #e53935; text-shadow: 0 0 20px rgba(229,57,53,0.8), 0 2px 0 rgba(0,0,0,0.4); }
+}
 .station-id span {
   color: var(--cream);
   font-size: 0.5em;
