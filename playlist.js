@@ -114,6 +114,36 @@ const STATIONS = [
     ]
   },
   {
+    id: "comedy",
+    name: "Laughing All the Way",
+    freq: "96.9",
+    color: "#e07a3e",
+    songs: [
+      { title: "You're a Mean One, Mr. Grinch", artist: "Thurl Ravenscroft", videoId: "60CYXuc7ATk" },
+      { title: "Jingle Bells", artist: "The Singing Dogs", videoId: "qSEBFlBtyIE" },
+      { title: "The Twelve Pains of Christmas", artist: "Bob Rivers", videoId: "Z_WMemdeizo" },
+      { title: "Nuttin' for Christmas", artist: "Stan Freberg", videoId: "opQBBAT57kA" },
+      { title: "¿Dónde Está Santa Claus?", artist: "Augie Rios", videoId: "VdIk_AHeuqg" },
+      { title: "Christmas Dragnet", artist: "Stan Freberg", videoId: "Jr6Ap56Uhs8" },
+      { title: "I Yust Go Nuts at Christmas", artist: "Yogi Yorgesson", videoId: "jYX-MWcxkk4" },
+      { title: "Santa's Beard", artist: "They Might Be Giants", videoId: "7GN6dO096Gg" }
+    ]
+  },
+  {
+    id: "northpole",
+    name: "North Pole Radio",
+    freq: "105.5",
+    color: "#4fc3d9",
+    songs: [
+      { title: "Frosty the Snowman", artist: "Gene Autry", videoId: "bdEpPXVOmTA" },
+      { title: "Up on the House Top", artist: "Gene Autry", videoId: "2Kmq7hh8Ofg" },
+      { title: "Jolly Old Saint Nicholas", artist: "Traditional", videoId: "LiO6DtK7t3k" },
+      { title: "Must Be Santa", artist: "Raffi", videoId: "TNtq9fzu7vA" },
+      { title: "Santa Tracker Update", artist: "NORAD Tracks Santa", videoId: "GhTLGBq-Uyg" },
+      { title: "We Wish You a Merry Christmas", artist: "Traditional", videoId: "yZVYXO2txTY" }
+    ]
+  },
+  {
     id: "funkjazz",
     name: "Funk & Jazz Christmas",
     freq: "98.3",
