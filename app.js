@@ -19,6 +19,7 @@
   }
 
   const FREQ_MIN = 88, FREQ_MAX = 108;
+  const FAVICON_DATA_URI = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a1430'/%3E%3Cpolygon points='50,15 30,55 70,55' fill='%232f6b3a'/%3E%3Cpolygon points='50,35 25,75 75,75' fill='%233b7a3f'/%3E%3Crect x='42' y='75' width='16' height='14' fill='%235c3a26'/%3E%3Ccircle cx='50' cy='20' r='5' fill='%23ffb648'/%3E%3C/svg%3E";
 
   // ---------- DOM ----------
   const el = {
@@ -42,6 +43,16 @@
     hint: document.getElementById("hint"),
     lights: document.getElementById("lights"),
     shareBtn: document.getElementById("shareBtn"),
+    shareMenu: document.getElementById("shareMenu"),
+    shareCopyBtn: document.getElementById("shareCopyBtn"),
+    shareEmailLink: document.getElementById("shareEmailLink"),
+    shareSmsLink: document.getElementById("shareSmsLink"),
+    shareQrBtn: document.getElementById("shareQrBtn"),
+    shareMoreBtn: document.getElementById("shareMoreBtn"),
+    qrOverlay: document.getElementById("qrOverlay"),
+    qrClose: document.getElementById("qrClose"),
+    qrImage: document.getElementById("qrImage"),
+    qrUrl: document.getElementById("qrUrl"),
     gnomeRow: document.getElementById("gnomeRow"),
     countdown: document.getElementById("countdown"),
     countdownDigits: document.getElementById("countdownDigits"),
@@ -279,6 +290,7 @@
     el.stationName.textContent = `${station.name} • ${station.freq} FM`;
     setMarquee(`${song.title.toUpperCase()}  —  ${song.artist.toUpperCase()}`);
     highlightStationButton();
+    updateMediaSessionMetadata(station, song);
 
     if (!playerReady) return;
     if (autoplay) {
@@ -307,6 +319,33 @@
     el.grille.classList.toggle("playing", playing);
     el.gnomeRow.classList.toggle("dancing", playing);
     if (playing) startVU(); else stopVU();
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.playbackState = playing ? "playing" : "paused";
+    }
+  }
+
+  // ---------- Media Session (Mac/Windows media keys, Bluetooth remotes) ----------
+  function updateMediaSessionMetadata(station, song) {
+    if (!("mediaSession" in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: song.title,
+      artist: song.artist,
+      album: station.name,
+      artwork: [{ src: FAVICON_DATA_URI, sizes: "100x100", type: "image/svg+xml" }],
+    });
+  }
+
+  function setupMediaSession() {
+    if (!("mediaSession" in navigator)) return;
+    navigator.mediaSession.setActionHandler("play", () => {
+      if (!powered) { setPowered(true); return; }
+      if (playerReady) player.playVideo();
+    });
+    navigator.mediaSession.setActionHandler("pause", () => {
+      if (playerReady) player.pauseVideo();
+    });
+    navigator.mediaSession.setActionHandler("previoustrack", () => { if (powered) changeSong(-1); });
+    navigator.mediaSession.setActionHandler("nexttrack", () => { if (powered) changeSong(1); });
   }
 
   function setPowered(on) {
@@ -402,34 +441,103 @@
   el.prevBtn.addEventListener("click", () => { if (powered) changeSong(-1); });
   el.nextBtn.addEventListener("click", () => { if (powered) changeSong(1); });
 
-  el.shareBtn.addEventListener("click", async () => {
-    const shareData = {
-      title: "Christmas Radio",
-      text: "A retro console radio with 70+ Christmas songs and a countdown to Christmas morning.",
-      url: location.href,
-    };
-    if (navigator.share) {
-      try { await navigator.share(shareData); } catch (e) { /* user cancelled */ }
-      return;
-    }
+  function isTouchPrimary() {
+    return window.matchMedia("(pointer: coarse)").matches;
+  }
+
+  const SHARE_TEXT = "Check out this fun Christmas radio! 80+ Christmas songs across nine stations, with a countdown to Christmas morning.";
+
+  async function nativeShare() {
+    try {
+      await navigator.share({ title: "Christmas Radio", text: SHARE_TEXT, url: location.href });
+    } catch (e) { /* user cancelled */ }
+  }
+
+  async function copyLink(target) {
     try {
       await navigator.clipboard.writeText(location.href);
-      const original = el.shareBtn.textContent;
-      el.shareBtn.textContent = "Link copied!";
-      el.shareBtn.classList.add("copied");
-      setTimeout(() => {
-        el.shareBtn.textContent = original;
-        el.shareBtn.classList.remove("copied");
-      }, 2000);
+      flashCopied(target);
     } catch (e) {
       el.hint.textContent = location.href;
     }
-  });
+  }
+
+  function flashCopied(target) {
+    const original = target.textContent;
+    target.textContent = "Copied!";
+    target.classList.add("copied");
+    setTimeout(() => {
+      target.textContent = original;
+      target.classList.remove("copied");
+    }, 2000);
+  }
+
+  function openShareMenu() {
+    el.shareEmailLink.href = `mailto:?subject=${encodeURIComponent("Christmas Radio")}&body=${encodeURIComponent(SHARE_TEXT + " " + location.href)}`;
+    el.shareSmsLink.href = `sms:?body=${encodeURIComponent(SHARE_TEXT + " " + location.href)}`;
+    el.shareMoreBtn.hidden = !navigator.share;
+    el.shareMenu.hidden = false;
+  }
+
+  function closeShareMenu() {
+    el.shareMenu.hidden = true;
+  }
+
+  function openQrOverlay() {
+    const url = location.href;
+    el.qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}`;
+    el.qrUrl.textContent = url;
+    el.qrOverlay.hidden = false;
+  }
+
+  function closeQrOverlay() {
+    el.qrOverlay.hidden = true;
+  }
+
+  function setupShareMenu() {
+    el.shareBtn.addEventListener("click", () => {
+      if (isTouchPrimary() && navigator.share) {
+        nativeShare();
+        return;
+      }
+      el.shareMenu.hidden ? openShareMenu() : closeShareMenu();
+    });
+
+    el.shareCopyBtn.addEventListener("click", () => {
+      copyLink(el.shareCopyBtn);
+    });
+    el.shareQrBtn.addEventListener("click", () => {
+      closeShareMenu();
+      openQrOverlay();
+    });
+    el.shareMoreBtn.addEventListener("click", () => {
+      closeShareMenu();
+      nativeShare();
+    });
+    el.shareEmailLink.addEventListener("click", closeShareMenu);
+    el.shareSmsLink.addEventListener("click", closeShareMenu);
+
+    document.addEventListener("click", (e) => {
+      if (!el.shareMenu.hidden && !e.target.closest(".share-wrap")) closeShareMenu();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      closeShareMenu();
+      closeQrOverlay();
+    });
+
+    el.qrClose.addEventListener("click", closeQrOverlay);
+    el.qrOverlay.addEventListener("click", (e) => {
+      if (e.target === el.qrOverlay) closeQrOverlay();
+    });
+  }
 
   // ---------- Init ----------
   buildGnomes();
   buildStationButtons();
   setupVolumeKnob();
+  setupShareMenu();
+  setupMediaSession();
   applyVolume();
   setMarquee("POWER OFF");
 

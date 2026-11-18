@@ -631,8 +631,12 @@ button {
   50%      { opacity: 1; }
 }
 
-.share-btn {
+.share-wrap {
+  position: relative;
   margin-top: 10px;
+}
+
+.share-btn {
   font-family: "Special Elite", monospace;
   font-size: 0.85rem;
   min-height: 44px;
@@ -652,6 +656,97 @@ button {
   color: #3b2418;
   border-color: var(--amber);
 }
+
+.share-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+  padding: 6px;
+  border-radius: 12px;
+  background: linear-gradient(155deg, var(--wood-light), var(--wood-mid) 60%);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(0,0,0,0.3);
+  z-index: 5;
+}
+.share-item {
+  font-family: "Special Elite", monospace;
+  font-size: 0.8rem;
+  text-align: left;
+  padding: 10px 12px;
+  min-height: 40px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--cream);
+  cursor: pointer;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.share-item:hover { background: rgba(240,228,200,0.14); }
+.share-item + .share-item { margin-top: 2px; }
+.share-item.copied { color: var(--amber); }
+
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(5,10,24,0.78);
+}
+.qr-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 26px 24px 20px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--cream), var(--cream-dark));
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  max-width: 280px;
+}
+.qr-title {
+  margin: 0;
+  font-family: "Special Elite", monospace;
+  font-size: 0.85rem;
+  color: var(--wood-dark);
+  text-align: center;
+}
+.qr-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 6px;
+  background: #fff;
+}
+.qr-url {
+  margin: 0;
+  font-family: "VT323", monospace;
+  font-size: 0.85rem;
+  color: var(--wood-mid);
+  word-break: break-all;
+  text-align: center;
+}
+.qr-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(59,36,24,0.12);
+  color: var(--wood-dark);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.qr-close:hover { background: rgba(59,36,24,0.22); }
 
 .preset-btn {
   font-family: "Special Elite", monospace;
