@@ -144,6 +144,38 @@ const STATIONS = [
     ]
   },
   {
+    id: "party",
+    name: "The Holiday Happy Hour",
+    freq: "93.3",
+    color: "#d9433e",
+    songs: [
+      { title: "Jingle Bell Rock", artist: "Bobby Helms", videoId: "gMccj6RVr74" },
+      { title: "Step Into Christmas", artist: "Elton John", videoId: "IbRtGMm96F8" },
+      { title: "Christmas All Over Again", artist: "Tom Petty and the Heartbreakers", videoId: "qPoHul8ngNw" },
+      { title: "Christmas Vacation", artist: "Mavis Staples", videoId: "y-hzsrzaYVs" },
+      { title: "Must Be Santa", artist: "Bob Dylan", videoId: "a8qE6WQmNus" },
+      { title: "Christmas Island", artist: "Jimmy Buffett", videoId: "wdhGPW5ZlJA" },
+      { title: "Mele Kalikimaka", artist: "Bing Crosby & The Andrews Sisters", videoId: "FezVApPddqU" },
+      { title: "Christmas Celebration", artist: "B.B. King", videoId: "inj9XqIXF9g" }
+    ]
+  },
+  {
+    id: "hymns",
+    name: "Hymns & Hallelujahs",
+    freq: "100.5",
+    color: "#8c7a3f",
+    songs: [
+      { title: "O Come, O Come, Emmanuel", artist: "Traditional", videoId: "ikEtkfRSUsU" },
+      { title: "Hallelujah Chorus", artist: "The Tabernacle Choir at Temple Square", videoId: "BBZ7AfZR9xs" },
+      { title: "What Child Is This?", artist: "Christendom College Choir", videoId: "BcprohAu22Y" },
+      { title: "The First Noel", artist: "The Tabernacle Choir at Temple Square", videoId: "Y4iXatDeY7A" },
+      { title: "God Rest Ye Merry, Gentlemen", artist: "The Bach Choir", videoId: "07CSu_IgL5A" },
+      { title: "In the Bleak Midwinter", artist: "Tenebrae", videoId: "wNPaXnMPenI" },
+      { title: "Go Tell It on the Mountain", artist: "Maverick City Music", videoId: "z1RpUV2AQ24" },
+      { title: "Ave Maria", artist: "Franz Schubert", videoId: "O2zu0oU5j40" }
+    ]
+  },
+  {
     id: "funkjazz",
     name: "Funk & Jazz Christmas",
     freq: "98.3",

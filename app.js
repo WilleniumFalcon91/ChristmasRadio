@@ -463,7 +463,7 @@
     return window.matchMedia("(pointer: coarse)").matches;
   }
 
-  const SHARE_TEXT = "Check out this fun Christmas radio! 80+ Christmas songs across nine stations, with a countdown to Christmas morning.";
+  const SHARE_TEXT = "Check out this fun Christmas radio! 100+ Christmas songs across eleven stations, with a countdown to Christmas morning.";
 
   async function nativeShare() {
     try {
