@@ -190,5 +190,19 @@ const STATIONS = [
       { title: "Jingle Bells", artist: "Oscar Peterson", videoId: "_o7emga9FIA" },
       { title: "Have Yourself a Merry Little Christmas", artist: "Diana Krall", videoId: "pLDAfhN-aIM" }
     ]
+  },
+  {
+    id: "griswold",
+    name: "Griswold's Luau",
+    freq: "95.7",
+    color: "#2bb3a3",
+    songs: [
+      { title: "Mele Kalikimaka", artist: "Don Ho", videoId: "NyS26sqH1WM" },
+      { title: "Merry Christmas to You", artist: "Henry Kapono", videoId: "igx24oZYvfo" },
+      { title: "The Christmas Song", artist: "Cecilio & Kapono", videoId: "R0xPg7cB4rg" },
+      { title: "Boogie Woogie Santa Claus", artist: "The Brian Setzer Orchestra", videoId: "QXH7SSZFdH4" },
+      { title: "Hey Santa!", artist: "The Brian Setzer Orchestra", videoId: "tpfiMwmiGEc" },
+      { title: "'Zat You, Santa Claus?", artist: "The Brian Setzer Orchestra", videoId: "D8mTXAaTzzI" }
+    ]
   }
 ];
