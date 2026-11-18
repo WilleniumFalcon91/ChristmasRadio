@@ -313,6 +313,8 @@
     powered = on;
     el.powerBtn.classList.toggle("on", on);
     if (on) {
+      el.playBtn.classList.remove("pulse-hint");
+      el.hint.classList.remove("hint-glow");
       el.hint.textContent = "Use the preset buttons to change stations";
       if (playerReady) {
         loadSong(true);
@@ -331,7 +333,7 @@
       setPlaying(false);
       setMarquee("POWER OFF");
       el.stationName.innerHTML = "&nbsp;";
-      el.hint.textContent = "Click the power button to tune in";
+      el.hint.textContent = "Tap the big ▶ button to play music again";
     }
   }
 
@@ -388,7 +390,11 @@
   el.powerBtn.addEventListener("click", () => setPowered(!powered));
 
   el.playBtn.addEventListener("click", () => {
-    if (!powered || !playerReady) return;
+    if (!powered) {
+      setPowered(true);
+      return;
+    }
+    if (!playerReady) return;
     if (isPlaying) player.pauseVideo();
     else player.playVideo();
   });
