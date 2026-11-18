@@ -43,8 +43,8 @@
     hint: document.getElementById("hint"),
     lights: document.getElementById("lights"),
     shareBtn: document.getElementById("shareBtn"),
+    shareMoreToggle: document.getElementById("shareMoreToggle"),
     shareMenu: document.getElementById("shareMenu"),
-    shareCopyBtn: document.getElementById("shareCopyBtn"),
     shareEmailLink: document.getElementById("shareEmailLink"),
     shareSmsLink: document.getElementById("shareSmsLink"),
     shareQrBtn: document.getElementById("shareQrBtn"),
@@ -500,12 +500,13 @@
         nativeShare();
         return;
       }
+      copyLink(el.shareBtn);
+    });
+
+    el.shareMoreToggle.addEventListener("click", () => {
       el.shareMenu.hidden ? openShareMenu() : closeShareMenu();
     });
 
-    el.shareCopyBtn.addEventListener("click", () => {
-      copyLink(el.shareCopyBtn);
-    });
     el.shareQrBtn.addEventListener("click", () => {
       closeShareMenu();
       openQrOverlay();
