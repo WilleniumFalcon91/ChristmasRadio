@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1430">
+<title>Christmas Radio</title>
+<meta name="description" content="A retro console radio playing 70+ Christmas classics across seven stations, with a gift-wrapped countdown to Christmas morning. Merry Christmas from the Elliotts.">
+<meta property="og:title" content="Christmas Radio">
+<meta property="og:description" content="A retro console radio playing 70+ Christmas classics, with a countdown to Christmas morning.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a1430'/%3E%3Cpolygon points='50,15 30,55 70,55' fill='%232f6b3a'/%3E%3Cpolygon points='50,35 25,75 75,75' fill='%233b7a3f'/%3E%3Crect x='42' y='75' width='16' height='14' fill='%235c3a26'/%3E%3Ccircle cx='50' cy='20' r='5' fill='%23ffb648'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=VT323&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="snow"></canvas>
+
+<div class="lights" id="lights"></div>
+
+<main class="stage">
+  <h1 class="station-id">Christmas Radio</h1>
+  <p class="tagline">Merry Christmas from the Elliotts</p>
+
+  <div class="countdown" id="countdown">
+    <div class="countdown-title">Countdown to Christmas Morning</div>
+    <div class="gift-box">
+      <div class="gift-ribbon-v"></div>
+      <div class="gift-ribbon-h"></div>
+      <div class="gift-bow">
+        <span class="bow-tail bow-tail-l"></span>
+        <span class="bow-tail bow-tail-r"></span>
+        <span class="bow-loop bow-loop-l"></span>
+        <span class="bow-loop bow-loop-r"></span>
+        <span class="bow-center"></span>
+        <span class="bow-knot"></span>
+      </div>
+      <div class="countdown-digits" id="countdownDigits">
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cdDays">00</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <span class="countdown-colon">:</span>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cdHours">00</span>
+          <span class="countdown-label">Hrs</span>
+        </div>
+        <span class="countdown-colon">:</span>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cdMins">00</span>
+          <span class="countdown-label">Min</span>
+        </div>
+        <span class="countdown-colon">:</span>
+        <div class="countdown-unit">
+          <span class="countdown-value" id="cdSecs">00</span>
+          <span class="countdown-label">Sec</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="radio" id="radio">
+    <div class="radio-screws"></div>
+
+    <div class="radio-top">
+      <div class="speaker-grille" id="grille"></div>
+
+      <div class="console">
+        <div class="display" id="display">
+          <div class="display-glass">
+            <div class="vu-meters">
+              <div class="vu-meter"><div class="vu-fill" id="vuL"></div></div>
+              <div class="vu-meter"><div class="vu-fill" id="vuR"></div></div>
+            </div>
+            <div class="marquee-track" aria-live="polite">
+              <div class="marquee-text" id="marquee">POWER OFF</div>
+            </div>
+            <div class="station-name" id="stationName" aria-live="polite">&nbsp;</div>
+          </div>
+        </div>
+
+        <div class="dial-area">
+          <div class="dial-face" id="dialFace">
+            <div class="dial-needle" id="dialNeedle"></div>
+          </div>
+          <div class="dial-labels" id="dialLabels"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="radio-bottom">
+      <button class="knob power-knob" id="powerBtn" aria-label="Power" title="Power">
+        <span class="knob-mark"></span>
+      </button>
+
+      <div class="transport">
+        <button class="transport-btn" id="prevBtn" title="Previous" aria-label="Previous song">&#9664;&#9664;</button>
+        <button class="transport-btn big" id="playBtn" title="Play/Pause" aria-label="Play or pause">&#9654;</button>
+        <button class="transport-btn" id="nextBtn" title="Next" aria-label="Next song">&#9654;&#9654;</button>
+      </div>
+
+      <div class="station-buttons" id="stationButtons"></div>
+
+      <div class="volume-wrap">
+        <label class="volume-label">VOL</label>
+        <div class="volume-control">
+          <button class="volume-step" id="volDown" aria-label="Decrease volume">&#8722;</button>
+          <div class="knob volume-knob" id="volumeKnob" title="Drag to adjust volume">
+            <span class="knob-mark"></span>
+          </div>
+          <button class="volume-step" id="volUp" aria-label="Increase volume">&#43;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-plate">MODEL&nbsp;XMAS-1957</div>
+  </div>
+
+  <div class="gnome-row" id="gnomeRow"></div>
+
+  <p class="hint" id="hint">Click the power button to tune in</p>
+  <button class="share-btn" id="shareBtn">Share this radio</button>
+</main>
+
+<div id="ytplayer" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="playlist.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
